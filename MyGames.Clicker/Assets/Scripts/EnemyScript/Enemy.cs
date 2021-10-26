@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Enemy :MonoBehaviour
 {
-    [SerializeField] protected int _hpCurrent;
 
+    private Camera _cam;
     private GameManager _gameManager;
+    [SerializeField]
+    private int _enemyScoreCost;
 
     //Эффект от получения урона
     [SerializeField] SpriteRenderer _sprite;
@@ -14,18 +17,36 @@ public class Enemy :MonoBehaviour
     private Color _addedTone = new Color(0, 0.1f, 0.1f, 0);
     private float _toneStep = 0.1f;
 
-    private Camera _cam;
+    [SerializeField]
+    private EnemyHeathbar _enemyHeathbar;
+
+    //Параметры атаки
+    private PlayerController _player;
+    [SerializeField]
+    private int _enemyDamage;
+    [SerializeField]
+    private float _timeToAttack;
+    [SerializeField] protected int _hpCurrent;
+    private int _hpMax;
+    private Animator _animator;
       
 
     private void Start()
     {
         _gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
         _cam = Camera.main;
+        _animator = GetComponent<Animator>();
+        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        _hpMax = _hpCurrent;
+        _enemyHeathbar.SetHealth(_hpCurrent, _hpMax);
+        StartCoroutine(EnemyAttack());
 
     }
 
     private void Update()
     {
+
+        //Обработка инпута для получения урона
         if (Input.GetMouseButtonDown(0))
         {
             Ray _ray = _cam.ScreenPointToRay(Input.mousePosition);
@@ -41,6 +62,10 @@ public class Enemy :MonoBehaviour
                 {
                     _enemyAgilled.GetDamage();
                 }
+                else if (_hit.collider.TryGetComponent(out EnemyBig _enemyBig))
+                {
+                    _enemyBig.GetDamage();
+                }
 
 
             }
@@ -48,17 +73,27 @@ public class Enemy :MonoBehaviour
         }
     }
 
+    IEnumerator EnemyAttack()
+    {
+        yield return new WaitForSeconds(_timeToAttack);
+        _animator.SetTrigger("Attack");
+        _player.PlayerGetDamage(_enemyDamage);        
+        StartCoroutine(EnemyAttack());
+    }
+
     public virtual void GetDamage()
     {
+        //Метод для получения урона 
         _hpCurrent--;
         _sprite.color = _damdgeMarker - _addedTone;
         _addedTone = new Color(0 , 0.1f+_toneStep, 0.1f+ _toneStep, 0);
         _toneStep += 0.1f;
-        
+        _enemyHeathbar.SetHealth(_hpCurrent, _hpMax);
+
         if (_hpCurrent <= 0)
         {
             _gameManager.StartCoroutine("EnemySpawn");
-            _gameManager.AddScore();
+            _gameManager.AddScore(_enemyScoreCost);
             DestroyImmediate(this.gameObject);           
         }
     }
