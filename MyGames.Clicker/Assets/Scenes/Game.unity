@@ -547,7 +547,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c98431e1e7929514999f1456dfeb6670, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerHp: 3
+  _playerSettingsMaxHp: 3
+  _playerSettingsDamage: 1
+  _playerSettingsIncome: 1
   _playerHpLabel: {fileID: 1430590282}
   _gameOverLabel: {fileID: 1164144378}
 --- !u!4 &595440423
@@ -1143,6 +1145,7 @@ MonoBehaviour:
   - {fileID: 8688789385081879759, guid: ba60ff10285747b4581bc4ea5d003918, type: 3}
   - {fileID: 1068728494506550031, guid: 7206e635377043f4694da54c5b1e1d6a, type: 3}
   _scoreText: {fileID: 606767073}
+  _time: 0
   _timeText: {fileID: 1645729343}
   _playerHpLabel: {fileID: 1430590282}
   _gameOverLabel: {fileID: 1164144378}

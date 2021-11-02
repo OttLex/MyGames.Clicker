@@ -10,6 +10,9 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Button _extrasButton;
     [SerializeField] private GameObject _extrasPanel;
 
+    [SerializeField] private GameObject _startCanvas;
+    [SerializeField] private GameObject _shopCanvas;
+
     public void LoadGame()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
@@ -27,5 +30,15 @@ public class MenuManager : MonoBehaviour
         _extrasButton.gameObject.SetActive(true);
         _startButton.gameObject.SetActive(true);
         _extrasPanel.gameObject.SetActive(false);
+    }
+    public void OpenShop()
+    {
+        _startCanvas.SetActive(false);
+        _shopCanvas.SetActive(true);
+    }
+    public void CloseShop()
+    {
+        _startCanvas.SetActive(true);
+        _shopCanvas.SetActive(false);
     }
 }

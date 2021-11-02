@@ -13,6 +13,12 @@ public class GameManager : MonoBehaviour
     private int _score=0;
     [SerializeField] Text _scoreText;
     private static int _highScore;
+
+    //Экономика
+    private static int _coins=0;
+    [SerializeField]
+
+    
     //Таймер
     private float _time;
     [SerializeField] Text _timeText;
@@ -67,11 +73,20 @@ public class GameManager : MonoBehaviour
     public void AddScore(int enemyScoreCost)
     {
         _score += enemyScoreCost;
-        _scoreText.text = "Score:" +_score ;
+        _coins += enemyScoreCost* PlayerController.CurrentIncome();
+        _scoreText.text = "Score:" +_score;
         if (_score >= _highScore)
         {
             _highScore = _score;
         }
+    }
+    public static int GetCoinsValue()
+    {
+        return _coins;
+    }
+    public static void SetCoinsValue(int newCoinsValue)
+    {
+        _coins = newCoinsValue;
     }
     public int GetScore()
     {

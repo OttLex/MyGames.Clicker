@@ -154,6 +154,7 @@ MonoBehaviour:
   _enemyDamage: 1
   _timeToAttack: 3
   _hpCurrent: 10
+  _hpMax: 10
 --- !u!1001 &2704286954775907294
 PrefabInstance:
   m_ObjectHideFlags: 0

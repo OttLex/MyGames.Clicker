@@ -154,6 +154,7 @@ MonoBehaviour:
   _enemyDamage: 1
   _timeToAttack: 3
   _hpCurrent: 5
+  _hpMax: 5
   _blinkEffect: {fileID: 100000, guid: a4af0d82b00381c48bc30b65c57ba3f8, type: 3}
 --- !u!114 &8688789386250831487
 MonoBehaviour:

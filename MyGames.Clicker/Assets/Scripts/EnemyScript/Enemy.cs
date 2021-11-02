@@ -27,7 +27,7 @@ public class Enemy :MonoBehaviour
     [SerializeField]
     private float _timeToAttack;
     [SerializeField] protected int _hpCurrent;
-    private int _hpMax;
+    [SerializeField] private int _hpMax;
     private Animator _animator;
       
 
@@ -37,7 +37,7 @@ public class Enemy :MonoBehaviour
         _cam = Camera.main;
         _animator = GetComponent<Animator>();
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        _hpMax = _hpCurrent;
+        _hpCurrent = _hpMax;
         _enemyHeathbar.SetHealth(_hpCurrent, _hpMax);
         StartCoroutine(EnemyAttack());
 
@@ -56,15 +56,15 @@ public class Enemy :MonoBehaviour
 
                 if (_hit.collider.TryGetComponent(out EnemyMelee _enemy))
                 {
-                    _enemy.GetDamage();
+                    _enemy.GetDamage(_player.PlayerDamage());
                 }
                 else if (_hit.collider.TryGetComponent(out EnemyAgiled _enemyAgilled))
                 {
-                    _enemyAgilled.GetDamage();
+                    _enemyAgilled.GetDamage(_player.PlayerDamage());
                 }
                 else if (_hit.collider.TryGetComponent(out EnemyBig _enemyBig))
                 {
-                    _enemyBig.GetDamage();
+                    _enemyBig.GetDamage(_player.PlayerDamage());
                 }
 
 
@@ -81,10 +81,10 @@ public class Enemy :MonoBehaviour
         StartCoroutine(EnemyAttack());
     }
 
-    public virtual void GetDamage()
+    public virtual void GetDamage(int playerDamage)
     {
         //Метод для получения урона 
-        _hpCurrent--;
+        _hpCurrent-= playerDamage;
         _sprite.color = _damdgeMarker - _addedTone;
         _addedTone = new Color(0 , 0.1f+_toneStep, 0.1f+ _toneStep, 0);
         _toneStep += 0.1f;
@@ -93,7 +93,7 @@ public class Enemy :MonoBehaviour
         if (_hpCurrent <= 0)
         {
             _gameManager.StartCoroutine("EnemySpawn");
-            _gameManager.AddScore(_enemyScoreCost);
+            _gameManager.AddScore(_enemyScoreCost );
             DestroyImmediate(this.gameObject);           
         }
     }

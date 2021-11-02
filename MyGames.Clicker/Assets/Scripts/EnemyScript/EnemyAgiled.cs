@@ -6,7 +6,7 @@ public class EnemyAgiled : Enemy
 {
     [SerializeField] GameObject _blinkEffect;
 
-    public override void GetDamage()
+    public override void GetDamage(int playerDamage)
     {
        
         //Шанс уклониться от атаки
@@ -18,7 +18,7 @@ public class EnemyAgiled : Enemy
         }
         else
         {
-            base.GetDamage();
+            base.GetDamage(playerDamage);
         }
 
     }
