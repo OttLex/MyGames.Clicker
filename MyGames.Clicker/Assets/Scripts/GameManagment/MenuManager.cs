@@ -8,28 +8,26 @@ public class MenuManager : MonoBehaviour
 {
     [SerializeField] private Button _startButton;
     [SerializeField] private Button _extrasButton;
-    [SerializeField] private GameObject _extrasPanel;
 
     [SerializeField] private GameObject _startCanvas;
     [SerializeField] private GameObject _shopCanvas;
+    [SerializeField] private GameObject _extrasCanvas;
 
     public void LoadGame()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("EndlesGame");
     }
 
     public void ShowExtras()
     {
-        _extrasButton.gameObject.SetActive(false);
-        _startButton.gameObject.SetActive(false);
-        _extrasPanel.gameObject.SetActive(true);
+        _startCanvas.SetActive(false);
+        _extrasCanvas.SetActive(true);
     }
 
     public void HideExtras()
     {
-        _extrasButton.gameObject.SetActive(true);
-        _startButton.gameObject.SetActive(true);
-        _extrasPanel.gameObject.SetActive(false);
+        _startCanvas.SetActive(true);
+        _extrasCanvas.SetActive(false);
     }
     public void OpenShop()
     {

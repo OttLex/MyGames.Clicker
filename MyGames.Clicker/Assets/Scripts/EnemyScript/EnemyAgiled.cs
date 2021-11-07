@@ -15,6 +15,7 @@ public class EnemyAgiled : Enemy
         if (_dodgeChance == rand)
         {
             Instantiate(_blinkEffect, transform.position, Quaternion.identity);
+            transform.position = new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, 3f));
         }
         else
         {

@@ -35,7 +35,7 @@ public class Enemy :MonoBehaviour
     {
         _gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
         _cam = Camera.main;
-        _animator = GetComponent<Animator>();
+        _animator = GetComponentInChildren<Animator>();
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         _hpCurrent = _hpMax;
         _enemyHeathbar.SetHealth(_hpCurrent, _hpMax);
