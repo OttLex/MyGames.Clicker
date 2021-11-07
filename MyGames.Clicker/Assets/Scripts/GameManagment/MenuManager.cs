@@ -6,9 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    [SerializeField] private Button _startButton;
-    [SerializeField] private Button _extrasButton;
-
     [SerializeField] private GameObject _startCanvas;
     [SerializeField] private GameObject _shopCanvas;
     [SerializeField] private GameObject _extrasCanvas;
