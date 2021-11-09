@@ -20,8 +20,11 @@ public class EnemyHeathbar : MonoBehaviour
         _helthBar.fillRect.GetComponentInChildren<Image>().color = Color.Lerp(_lowHealthbar, _highHealthbar, _helthBar.normalizedValue);
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        _helthBar.transform.position = Camera.main.WorldToScreenPoint(transform.parent.position + _heathbarOffset);
+        if (_helthBar != null)
+        {
+            _helthBar.transform.position = Camera.main.WorldToScreenPoint(transform.parent.position + _heathbarOffset);
+        }
     }
 }

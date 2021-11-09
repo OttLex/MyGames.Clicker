@@ -10,9 +10,13 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject _shopCanvas;
     [SerializeField] private GameObject _extrasCanvas;
 
-    public void LoadGame()
+    public void LoadEndlesGame()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("EndlesGame");
+        SceneManager.LoadScene("EndlesGame");
+    }
+    public void LoadScoreGame()
+    {
+       SceneManager.LoadScene("ScoreGame");
     }
 
     public void ShowExtras()

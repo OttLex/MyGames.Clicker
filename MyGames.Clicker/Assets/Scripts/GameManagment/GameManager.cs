@@ -104,7 +104,8 @@ public class GameManager : MonoBehaviour
     public void RestarGame()
     {
         TimeReset();
-        SceneManager.LoadScene("EndlesGame");
+        string lname = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(lname);
     }
 
     public void GameOver()
