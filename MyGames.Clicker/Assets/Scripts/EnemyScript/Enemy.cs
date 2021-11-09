@@ -54,18 +54,11 @@ public class Enemy :MonoBehaviour
             if (Physics.Raycast(_ray, out _hit, 100))
             {
 
-                if (_hit.collider.TryGetComponent(out EnemyMelee _enemy))
+                if (_hit.collider.TryGetComponent(out Enemy _enemy))
                 {
                     _enemy.GetDamage(_player.PlayerDamage());
                 }
-                else if (_hit.collider.TryGetComponent(out EnemyAgiled _enemyAgilled))
-                {
-                    _enemyAgilled.GetDamage(_player.PlayerDamage());
-                }
-                else if (_hit.collider.TryGetComponent(out EnemyBig _enemyBig))
-                {
-                    _enemyBig.GetDamage(_player.PlayerDamage());
-                }
+             
 
 
             }
