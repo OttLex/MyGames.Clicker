@@ -20,40 +20,43 @@ public class GameManager : MonoBehaviour
 
     
     //Таймер
-    private float _time;
-    [SerializeField] Text _timeText;
+    protected float _time;
+    [SerializeField] protected Text _timeText;
 
     //Конец игры
+    [SerializeField] private Button _exitBitton;
     [SerializeField]
     private Text _playerHpLabel;
     [SerializeField]
     private GameObject _gameOverLabel;
-    [SerializeField] Text _gameOverTimer;
-    [SerializeField] Text _gameOverScore;
-    [SerializeField] Text _gameOverHighScore;
+    [SerializeField] private Text _gameOverTimer;
+    [SerializeField] private Text _gameOverScore;
+    [SerializeField] private Text _gameOverHighScore;
+    [SerializeField] private AudioClip _loseSound;
+    private AudioSource _audioSource;
 
     private void Start()
     {
         StartCoroutine(EnemySpawn());
-        TimeReset();
+        _audioSource= GetComponent<AudioSource>();
+   
 
     }
-    private void FixedUpdate()
+    private  void FixedUpdate()
     {
-        _time = Time.timeSinceLevelLoad;
-        _timeText.text = _time.ToString();
+        SetTime();
     }
-
-    public void TimeReset()
-    {
-        _time = 0f;
-    }
-
+  
     public float GetTime()
     {
         return _time;
     }
 
+    public virtual void SetTime()
+    {
+        _time = Time.timeSinceLevelLoad;
+        _timeText.text = _time.ToString();
+    }
     public IEnumerator EnemySpawn()
     {
         yield return new WaitForSeconds(.1f);
@@ -103,9 +106,9 @@ public class GameManager : MonoBehaviour
     }
     public void RestarGame()
     {
-        TimeReset();
-        string lname = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(lname);
+
+        string sceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(sceneName);
     }
 
     public void GameOver()
@@ -113,10 +116,16 @@ public class GameManager : MonoBehaviour
         StopAllCoroutines();
         var enemy = GameObject.FindGameObjectWithTag("Enemy");
         DestroyImmediate(enemy);
+        _audioSource.volume = 0.2f;
+        _audioSource.PlayOneShot(_loseSound);
+        _exitBitton.gameObject.SetActive(false);
         _playerHpLabel.gameObject.SetActive(false);
         _gameOverLabel.SetActive(true);
-        _gameOverTimer.text = "Your time: " + GetTime().ToString();
         _gameOverScore.text = "Your score: " + GetScore().ToString();
         _gameOverHighScore.text = "Your highscore: " + GetHighScore();
+        if (_time > 0)
+        {
+            _gameOverTimer.text = "Your time: " + GetTime().ToString();
+        }
     }
 }

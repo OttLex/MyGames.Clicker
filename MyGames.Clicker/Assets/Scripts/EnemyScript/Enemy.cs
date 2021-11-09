@@ -29,6 +29,8 @@ public class Enemy :MonoBehaviour
     [SerializeField] protected int _hpCurrent;
     [SerializeField] private int _hpMax;
     private Animator _animator;
+    [SerializeField] private AudioClip _attackSound;
+    private AudioSource _audioSource;
       
 
     private void Start()
@@ -37,8 +39,14 @@ public class Enemy :MonoBehaviour
         _cam = Camera.main;
         _animator = GetComponentInChildren<Animator>();
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        int hpProgression= _gameManager.GetScore()/4;
+        int damageProgression = _gameManager.GetScore() / 8;
+        _hpMax += hpProgression;
+        _enemyDamage += damageProgression;
         _hpCurrent = _hpMax;
         _enemyHeathbar.SetHealth(_hpCurrent, _hpMax);
+         _audioSource= GetComponent<AudioSource>();
+        _audioSource.clip = _attackSound;
         StartCoroutine(EnemyAttack());
 
     }
@@ -66,8 +74,10 @@ public class Enemy :MonoBehaviour
 
     IEnumerator EnemyAttack()
     {
-        yield return new WaitForSeconds(_timeToAttack);
+        yield return new WaitForSeconds(_timeToAttack-0.5f);
         _animator.SetTrigger("Attack");
+        _audioSource.Play();
+        yield return new WaitForSeconds(0.5f);
         _player.PlayerGetDamage(_enemyDamage);        
         StartCoroutine(EnemyAttack());
     }

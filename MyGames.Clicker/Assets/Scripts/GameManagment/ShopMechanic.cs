@@ -18,10 +18,10 @@ public class ShopMechanic : MonoBehaviour
    
     public void UpdateUI()
     {
-        _currentCoins.text = GameManager.GetCoinsValue().ToString();
-        _hpCost.text = CalculateCost(PlayerController.CurrentMaxHp()).ToString();
-        _damageCost.text = CalculateCost(PlayerController.CurrentDamage()).ToString();
-        _incomeCost.text = CalculateCost(PlayerController.CurrentIncome()).ToString();
+        _currentCoins.text = "Coins: " +GameManager.GetCoinsValue().ToString();
+        _hpCost.text = CalculateCost(PlayerController.CurrentMaxHp()*2).ToString();
+        _damageCost.text = CalculateCost(PlayerController.CurrentDamage()*2).ToString();
+        _incomeCost.text = CalculateCost(PlayerController.CurrentIncome()*2).ToString();
     }
 
     public void UpgradeHpButton()
@@ -65,6 +65,7 @@ public class ShopMechanic : MonoBehaviour
 
     public int CalculateCost(int value)
     {
+        value = value * 2;
         return value;
     }
 
